@@ -29,16 +29,20 @@ set $bg2 /home/pandy/Pictures/wallpaper/jp9GSLT.jpg
 set $bg3 /home/pandy/Pictures/wallpaper/wallhaven-lmq522.jpg
 
 # BORDERS
-set $bg-color 	         #157a66
+set $bg-color 	         #5fd7ff
 set $inactive-bg-color   #655866
-set $text-color          #f3f4f5
-set $inactive-text-color #676E7D
+#set $text-color          #1f0121
+set $text-color          #302d30
+set $inactive-text-color #a1c9cc
 set $urgent-bg-color     #E53935
+set $indicator		 #0000ff
 
 # polybar instead of i3blocks
 #exec_always --no-startup-id /home/pandy/.config/polybar/launch.sh
 # compositor, for app transparency and shit
-exec_always --no-startup-id "picom --backend glx --corner-radius=5"
+#exec_always --no-startup-id "picom --backend glx --corner-radius=5"
+# might resolve screentearing. vsync-like solution?
+exec_always --no-startup-id "picom --experimental-backends --corner-radius=5"
 
 # turning off screen sleep
 exec --no-startup-id xset s off -dpms
@@ -55,22 +59,22 @@ workspace 1 output DP-0
 
 # window colors
 #                       border              background         text                 indicator
-client.focused          $bg-color           $bg-color          $text-color          #00ff00
-client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color  #00ff00
-client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color  #00ff00
-client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #00ff00
+client.focused          $bg-color           $bg-color          $text-color          $indicator
+client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color $indicator
+client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color $indicator
+client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $indicator
 
 default_border		 pixel 3 
-default_floating_border  pixel 5
-for_window [instance = "__focused__"] border pixel 5
+default_floating_border  pixel 3
+for_window [instance = "__focused__"] border pixel 3
 
 # some hyprland lookin garbage
-gaps inner 2
+gaps inner 5
 gaps outer 5
 gaps horizontal 5
 gaps vertical 5
 
-#font pango:DepartureMono Nerd Font Regular 8
+font pango:DepartureMono Nerd Font Regular 8
 
 # Start XDG autostart .desktop files using dex. See also
 exec --no-startup-id dex --autostart --environment i3
@@ -191,7 +195,8 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 # Note that if xfce manages your session instead of i3: exiting i3 will blank your screen but not terminate your session.
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'owo U pressd da exit shortcut!! Do u rly wanna exit i3? Dis will end your X session. uwu' -B 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'OwO U pressd da exit shortcut!! Do u rly wanna exit i3? Dis will end your X session. uwu' -B 'Yes, exit i3' 'xfce4-session-logout'"
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'OwO U pressd da exit shortcut!! Do u rly wanna exit i3? Dis will end your X session. uwu' -B 'Yes, exit i3' 'xfce4-session-logout'"
+bindsym $mod+Shift+e exec "xfce4-session-logout"
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -377,9 +382,10 @@ bar {
 	colors {
 		background $bg-color
 	    	separator #757575
-		#                  border             background         text
-		focused_workspace  $bg-color          $bg-color          $text-color
-		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+		#                  border             background         text	
+		inactive_workspace  $bg-color          $bg-color          $text-color
+		#focused_workspace  $bg-color          $bg-color          $text-color
+		focused_workspace   $inactive-bg-color $inactive-bg-color $inactive-text-color
 		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
 	}
 }
