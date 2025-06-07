@@ -40,9 +40,7 @@ set $indicator		 #0000ff
 # polybar instead of i3blocks
 #exec_always --no-startup-id /home/pandy/.config/polybar/launch.sh
 # compositor, for app transparency and shit
-#exec_always --no-startup-id "picom --backend glx --corner-radius=5"
-# might resolve screentearing. vsync-like solution?
-exec_always --no-startup-id "picom --experimental-backends --corner-radius=5"
+exec_always --no-startup-id "picom --blur-background --backend glx --corner-radius=5"
 
 # turning off screen sleep
 exec --no-startup-id xset s off -dpms
